@@ -19,7 +19,14 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.add), 
-            onPressed: null,
+            onPressed: () async {
+
+              // showLoading(context);
+              // await Future.delayed(Duration(seconds:1));
+              // Navigator.pop(context);
+              showAlert(context, 'Hi', 'world');
+
+            },
             ),
         ]
       ),

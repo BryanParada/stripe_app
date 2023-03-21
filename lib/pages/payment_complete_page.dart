@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PaymentCompletePage extends StatelessWidget {
   const PaymentCompletePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment made'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            Icon(FontAwesomeIcons.star, color: Colors.white54, size: 100),
+            SizedBox(height: 20,),
+            Text('Payment Successful!', style: TextStyle(color: Colors.white, fontSize: 22)),
+
+          ],
+        )
+      )
+    );
   }
 }
