@@ -8,7 +8,7 @@ class CreditCard {
   final String expiracyDate;
   final String cardHolderName;
 
-  CreditCard({
+  const CreditCard({
     required this.cardNumberHidden,
     required this.cardNumber,
     required this.brand,
