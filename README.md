@@ -1,6 +1,26 @@
 # stripe_app
 
-A new Flutter project.
+An Advanced Flutter App for making payments with Stripe.
+Video demo:
+https://youtu.be/mBg8sbty_x4
+
+![image](https://user-images.githubusercontent.com/51382458/227028903-d114ab69-c3e4-4567-97d8-b2f82ff83a64.png)
+
+## Features 
+- Add a credit card
+- Make a payment with Stripe
+
+## What did i use in this app?
+- Configuring a Bloc to manage the state
+- Hero Animation
+- StripeService and StripeApi
+- Payment Attempts
+- make collections
+- Check payment status in Stripe
+- Pay with existing and new cards
+- ApplePay
+- GooglePay
+
 
 ## Getting Started
 
