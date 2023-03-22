@@ -98,10 +98,63 @@ class StripeService{
 
   }
 
-  Future payApplePayGooglePay({
+  Future<StripeCustomResponse> payApplePayGooglePay({
     required String amount,
     required String currency,
     }) async{
+
+      try {
+
+        final newAmount = double.parse( amount ) / 100;
+
+        final token = await StripePayment.paymentRequestWithNativePay(
+          androidPayOptions: AndroidPayPaymentRequest(
+            currencyCode: amount,
+             totalPrice: currency,
+             ),
+           applePayOptions: ApplePayPaymentOptions(
+            countryCode: 'US',
+            currencyCode: currency,
+            items: [
+              ApplePayItem(
+                label: 'Product 1',
+                amount: '$newAmount'
+              )
+            ]
+           )
+           );
+
+           final paymentMethod = await StripePayment.createPaymentMethod(
+            PaymentMethodRequest(
+              card: CreditCard(
+                token: token.tokenId
+              )
+            )
+           );
+
+          final resp = await this._makePayment(
+            amount: amount,
+            currency: currency,
+            paymentMethod: paymentMethod
+          );
+
+        await StripePayment.completeNativePayRequest();
+
+
+        return resp;
+
+        
+      } catch (e) {
+        
+      print('Error trying to pay: ${e.toString()}');
+       return StripeCustomResponse(
+        ok: false,
+        msg: e.toString()
+       );
+
+      }
+
+
 
   }
 
@@ -128,8 +181,11 @@ class StripeService{
 
       } catch (e) {
         
-        print('Error trying to pay: ${e.toString()}');
-        // return PaymentIntentResponse( status: '400');
+      print('Error trying to pay: ${e.toString()}');
+       return StripeCustomResponse(
+        ok: false,
+        msg: e.toString()
+       );
         
 
       }

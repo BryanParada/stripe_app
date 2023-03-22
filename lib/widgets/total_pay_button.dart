@@ -135,8 +135,16 @@ class _BtnPayment extends StatelessWidget {
           Text(' Pay', style: TextStyle(color: Colors.white, fontSize: 22))
         ],
       ),
-      onPressed: (){
+      onPressed: ()async {
         print('hola GPAY');
+
+        final stripeService = new StripeService();
+        final state = context.read<PayBloc>().state;
+
+        final resp = await stripeService.payApplePayGooglePay(
+          amount: state.amountPayString,
+           currency: state.currency
+           );
         
       },
       );
