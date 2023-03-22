@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.add), 
             onPressed: () async {
 
-              // showLoading(context);
+               showLoading(context);
               // await Future.delayed(Duration(seconds:1));
               // Navigator.pop(context);
 
@@ -45,6 +45,8 @@ class HomePage extends StatelessWidget {
                   amount: amount,
                   currency: currency
                  );
+
+              Navigator.pop(context);
 
             if (resp.ok){
               showAlert(context, 'Card Ok', 'Everything Ok');
