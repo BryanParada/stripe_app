@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stripe_app/bloc/pay/pay_bloc.dart';
+import 'package:stripe_app/helpers/helpers.dart';
+import 'package:stripe_app/services/stripe_service.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class TotalPayButton extends StatelessWidget {
   const TotalPayButton({super.key});
@@ -12,6 +15,7 @@ class TotalPayButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final width = MediaQuery.of(context).size.width;
+    final payBloc = context.read<PayBloc>().state;
 
     return Container(
       width: width,
@@ -33,7 +37,7 @@ class TotalPayButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Total', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Text('250.55 USD', style: TextStyle(fontSize: 20))
+              Text('${payBloc.amountPay} ${ payBloc.currency}', style: TextStyle(fontSize: 20))
             ],
           ),
 
@@ -79,7 +83,37 @@ class _BtnPayment extends StatelessWidget {
           Text('  Card Pay', style: TextStyle(color: Colors.white, fontSize: 22))
         ],
       ),
-      onPressed: (){},
+      onPressed: ()async {
+        print('Hola Mundo');
+        
+        showLoading(context);
+
+        final stripService = new StripeService();
+        final state = context.read<PayBloc>().state;
+        // print(card.cardNumber);
+        final card = state.card;
+        final monthYear = card.expiracyDate.split('/');
+
+        final resp = await stripService.payWithExistingCard(
+          amount: state.amountPayString ,
+          currency: state.currency, 
+          card: CreditCard(
+            number: card.cardNumber,
+            expMonth: int.parse(monthYear[0]),
+            expYear: int.parse(monthYear[1]),
+          )
+          );
+
+        Navigator.pop(context);
+
+        if (resp.ok){
+          showAlert(context, 'Card Ok', 'Everything Ok');
+        } else{
+          showAlert(context, 'Something went wrong', resp.msg);
+        }
+        
+
+      },
       );
   }
 
@@ -101,7 +135,10 @@ class _BtnPayment extends StatelessWidget {
           Text(' Pay', style: TextStyle(color: Colors.white, fontSize: 22))
         ],
       ),
-      onPressed: (){},
+      onPressed: (){
+        print('hola GPAY');
+        
+      },
       );
   }
 }
