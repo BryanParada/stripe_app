@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-class CreditCard {
+class CreditCardModel {
   final String cardNumberHidden;
   final String cardNumber;
   final String brand;
@@ -8,7 +8,7 @@ class CreditCard {
   final String expiracyDate;
   final String cardHolderName;
 
-  const CreditCard({
+  const CreditCardModel({
     required this.cardNumberHidden,
     required this.cardNumber,
     required this.brand,

@@ -1,7 +1,7 @@
 import '../models/credit_card.dart';
 
-final List<CreditCard> cards = <CreditCard>[
-    CreditCard(
+final List<CreditCardModel> cards = <CreditCardModel>[
+    CreditCardModel(
       cardNumberHidden: '4242',
       cardNumber: '4242424242424242',
       brand: 'visa',
@@ -9,7 +9,7 @@ final List<CreditCard> cards = <CreditCard>[
       expiracyDate: '01/25',
       cardHolderName: 'Juan Perez'
     ),
-    CreditCard(
+    CreditCardModel(
       cardNumberHidden: '5555',
       cardNumber: '5555555555554444',
       brand: 'mastercard',
@@ -17,7 +17,7 @@ final List<CreditCard> cards = <CreditCard>[
       expiracyDate: '01/25',
       cardHolderName: 'Melissa Flores'
     ),
-    CreditCard(
+    CreditCardModel(
       cardNumberHidden: '3782',
       cardNumber: '378282246310005',
       brand: 'american express',

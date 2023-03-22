@@ -6,13 +6,13 @@ class PayState {
   final double amountPay;
   final String currency; //moneda USD-CAD
   final bool cardActive;
-  final CreditCard card;
+  final CreditCardModel card;
 
   PayState({
   this.amountPay = 300.55, 
   this.currency = 'USD', 
   this.cardActive = false, 
-  this.card = const CreditCard(
+  this.card = const CreditCardModel(
     cardNumberHidden: '',
     cardNumber: '',
     brand: '',
@@ -26,7 +26,7 @@ class PayState {
     double? amountPay,
     String? currency,
     bool? cardActive,
-    CreditCard? card,
+    CreditCardModel? card,
   }) => PayState(
     amountPay : amountPay ?? this.amountPay,
     currency  : currency ?? this.currency,

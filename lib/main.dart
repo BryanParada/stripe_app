@@ -4,7 +4,15 @@ import 'package:stripe_app/bloc/pay/pay_bloc.dart';
 import 'package:stripe_app/pages/home_page.dart';
 import 'package:stripe_app/pages/payment_complete_page.dart';
 
-void main() => runApp(const MyApp());
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Future<void> main() async{
+  await dotenv.load();
+ 
+  runApp(const MyApp()); //MyApp
+
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

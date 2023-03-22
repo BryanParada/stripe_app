@@ -5,7 +5,7 @@ abstract class PayEvent {}
 
 class OnSelectCard extends PayEvent {
 
-  final CreditCard card;
+  final CreditCardModel card;
   OnSelectCard(this.card);
 
 }
