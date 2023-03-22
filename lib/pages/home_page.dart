@@ -1,20 +1,28 @@
+ 
+
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stripe_app/bloc/pay/pay_bloc.dart';
 
 import 'package:stripe_app/data/cards.dart';
 import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/pages/card_page.dart';
+import 'package:stripe_app/services/stripe_service.dart';
 import 'package:stripe_app/widgets/total_pay_button.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
 
+  final stripeService = new StripeService();
+
+ 
   @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+
+      // ignore: close_sinks
+    final payBloc = context.read<PayBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +35,22 @@ class HomePage extends StatelessWidget {
               // showLoading(context);
               // await Future.delayed(Duration(seconds:1));
               // Navigator.pop(context);
-              showAlert(context, 'Hi', 'world');
+
+              // showAlert(context, 'Hi', 'world');
+
+              final amount = payBloc.state.amountPayString;
+              final currency = payBloc.state.currency;
+
+              final resp = await this.stripeService.payWithNewCard(
+                  amount: amount,
+                  currency: currency
+                 );
+
+            if (resp.ok){
+              showAlert(context, 'Card Ok', 'Everything Ok');
+            } else{
+              showAlert(context, 'Something went wrong', resp.msg);
+            }
 
             },
             ),

@@ -7,6 +7,8 @@ import 'package:stripe_app/pages/payment_complete_page.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:stripe_app/services/stripe_service.dart';
+
 Future<void> main() async{
   await dotenv.load();
  
@@ -19,6 +21,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //INICIALIZAMOS StripService
+    // final stripeService = new StripeService();
+    // stripeService.init();
+    //ó
+    new StripeService()
+    ..init();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => PayBloc()) //global
