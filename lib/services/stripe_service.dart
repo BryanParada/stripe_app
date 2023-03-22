@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:stripe_app/models/payment_intent_response.dart';
 import 'package:stripe_app/models/stripe_custom_response.dart';
 import 'package:stripe_payment/stripe_payment.dart'; 
 
@@ -12,8 +14,15 @@ class StripeService{
   factory StripeService() => _instance; //al llamar la instancia
 
   String _paymentApiUrl = 'https://api.stripe.com/v1/payment_intents';
-  String _secretKey = dotenv.env['SECRET_KEY'].toString();
+  static String _secretKey = dotenv.env['SECRET_KEY'].toString();
   String _apiKey = dotenv.env['API_KEY'].toString();
+
+  final headerOptions = new Options(
+    contentType: Headers.formUrlEncodedContentType, 
+    headers: {
+      'Authorization': 'Bearer ${StripeService._secretKey}'
+    }
+  );
 
   void init() {
 
@@ -50,6 +59,13 @@ class StripeService{
       );
 
       // Crear el intent
+      final resp = await this._createPaymentIntent(
+         amount: amount,
+          currency: currency
+          );
+
+          
+
        return StripeCustomResponse(ok: true);
 
     } catch (e) {
@@ -73,6 +89,31 @@ class StripeService{
     required String amount,
     required String currency,
     })async{
+
+      try {
+        
+        final dio = new Dio();
+        final data = {
+          'amount' : amount,
+          'currency': currency,
+        };
+
+        final resp = await dio.post(
+          _paymentApiUrl,
+          data: data,
+          options: headerOptions,
+        );
+
+        return PaymentIntentResponse.fromMap( resp.data ); //fromJson
+
+      } catch (e) {
+        
+        print('Error trying to pay: ${e.toString()}');
+        // return PaymentIntentResponse( status: '400');
+        
+
+      }
+
 
   }
 
